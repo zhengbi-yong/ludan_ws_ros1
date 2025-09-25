@@ -63,4 +63,4 @@ bool LeggedHW::loadUrdf(ros::NodeHandle& rootNh)
 //   return !urdfString.empty() && urdfModel_->initString(urdfString);
 // }
 
-// }  // namespace legged
+}  // namespace legged
