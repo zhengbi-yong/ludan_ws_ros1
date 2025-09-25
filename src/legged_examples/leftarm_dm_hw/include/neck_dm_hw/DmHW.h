@@ -32,6 +32,8 @@ struct DmImuData
   double linear_acc_cov[9];
 };
 
+static constexpr int kInvalidMotor = -1;
+
 class DmHW : public LeggedHW
 {
 public:
@@ -58,6 +60,9 @@ private:
   void hybridCmdCb(const std_msgs::Float64MultiArray::ConstPtr& msg);
   void emgCb(const std_msgs::Float32::ConstPtr& msg);
 
+  // 关节到电机 ID 映射
+  void loadMotorIdMap(const ros::NodeHandle& robot_hw_nh);
+
   // 发布/订阅器
   ros::Publisher cmd_pos_pub_, cmd_vel_pub_, cmd_ff_pub_, read_pos_pub_, read_vel_pub_, read_ff_pub_;
   ros::Subscriber odom_sub_;
@@ -70,9 +75,11 @@ private:
   int contactThreshold_{0};
   bool estimateContact_[4]{false, false, false, false};
 
+  std::array<int, NUM_JOINTS> motorIdMap_{};
+
   // 下发缓冲（电机方向映射）
   DmMotorData dmSendcmd_[NUM_JOINTS];
-  const std::vector<int> directionMotor_{ 
+  const std::vector<int> directionMotor_{
     1, 1, -1, 1, 1,   -1, 1,    // 左腿 0..6
     -1, -1, -1, 1, 1, -1, 1     // 右腿 7..13 例子，按需改
   };
