@@ -23,8 +23,8 @@
                  'neck_l4_joint','neck_l5_joint','neck_l6_joint','neck_l7_joint',
                  'neck_r1_joint','neck_r2_joint','neck_r3_joint',
                  'neck_r4_joint','neck_r5_joint','neck_r6_joint','neck_r7_joint']
-        default_kp: 0.0
-        default_kd: 0.0
+        default_kp: 20.0
+        default_kd: 1.0
         default_vel: 0.0
         default_ff:  0.0
       </rosparam>
