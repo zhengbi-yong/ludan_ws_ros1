@@ -1,0 +1,30 @@
+<launch>
+    <!-- 机器人类型参数 -->
+    <arg name="robot_type" default="dm" doc="Robot type: [yks]"/>
+
+    <!-- 加载URDF模型 -->
+    <!-- <param name="robot_description" command="$(find xacro)/xacro $(find legged_dm_description)/urdf/dm.urdf robot_type:=$(arg robot_type)" /> -->
+    <param name="robot_description" command="$(find xacro)/xacro $(find wanren_arm)/urdf/wanren_arm.urdf robot_type:=$(arg robot_type)" />
+
+    <!-- 手动覆盖相关参数 -->
+    <param name="manual_topic_override" value="true"/>
+    <param name="manual_cmd_timeout" value="0.2"/>
+
+    <!-- 加载硬件配置文件 -->
+    <rosparam file="$(find legged_dm_hw)/config/$(arg robot_type).yaml" command="load"/>
+
+    <!-- 加载MoveIt控制器配置文件 -->
+    <rosparam file="$(find right_arm_hw)/config/moveit_controllers.yaml" command="load"/>
+
+    <!-- 启动 robot_state_publisher 节点（发布机器人的URDF描述） -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen"/>
+
+    <!-- 启动硬件接口节点 -->
+    <node name="legged_dm_hw" pkg="legged_dm_hw" type="legged_dm_hw" respawn="false" clear_params="true" output="screen">
+        <param name="port" value="/dev/mcu_rightarm"/>
+        <param name="baud" value="921600"/>
+    </node>
+
+    <!-- 启动控制器管理器 -->
+    <node pkg="controller_manager" type="spawner" name="controller_spawner" args="joint_state_controller legged_dm_controller"/>
+</launch>

@@ -1,0 +1,33 @@
+<launch>
+  <!-- 串口参数写到根空间，供 dmbot_serial::robot 使用（若你用 DmHW+stm32 串口） -->
+  <arg name="port" default="/dev/mcu_neck"/>
+  <arg name="baud" default="921600"/>
+  <param name="/port" value="$(arg port)"/>
+  <param name="/baud" value="$(arg baud)"/>
+
+  <!-- 硬件 bringup（会带 controller_manager） -->
+  <include file="$(find neck_dm_hw)/launch/neck_dm_hw.launch"/>
+
+  <!-- 必须：URDF 里已经有这14个 joints -->
+  <rosparam param="neck/joint_state_controller">
+    type: joint_state_controller/JointStateController
+    publish_rate: 100
+  </rosparam>
+
+  <rosparam param="neck/all_joints_hjc_neck">
+      type: simple_hjc/AllJointsHybridController
+      joints: ['neck_l1_joint','neck_l2_joint','neck_l3_joint',
+               'neck_l4_joint','neck_l5_joint','neck_l6_joint','neck_l7_joint',
+               'neck_r1_joint','neck_r2_joint','neck_r3_joint',
+               'neck_r4_joint','neck_r5_joint','neck_r6_joint','neck_r7_joint']
+      default_kp: 0.0
+      default_kd: 0.0
+      default_vel: 0.0
+      default_ff:  0.0
+    </rosparam>
+
+  <node pkg="controller_manager" type="spawner" name="spawner_neck"
+        output="screen"
+        args="neck/joint_state_controller neck/all_joints_hjc_neck"/>
+</launch>
+
