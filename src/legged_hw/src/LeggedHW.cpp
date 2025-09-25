@@ -44,8 +44,11 @@ bool LeggedHW::loadUrdf(ros::NodeHandle& rootNh)
   ros::NodeHandle nh_private("~");
   if (!nh_private.getParam("legged_robot_description", urdfString))
   {
-    ROS_ERROR("URDF not found in ns: %s", nh_private.getNamespace().c_str());
-    return false;
+    if (!rootNh.getParam("legged_robot_description", urdfString))
+    {
+      ROS_ERROR("URDF not found in ns: %s", nh_private.getNamespace().c_str());
+      return false;
+    }
   }
 
   return urdfModel_->initString(urdfString);
