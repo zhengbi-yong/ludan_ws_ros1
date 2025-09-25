@@ -3,6 +3,7 @@
 #include <std_msgs/Float64MultiArray.h>
 #include <controller_interface/controller.h>
 #include <legged_common/hardware_interface/HybridJointInterface.h>
+#include <string>
 
 namespace simple_hjc {
 
@@ -26,6 +27,9 @@ private:
 
   // 订阅者
   ros::Subscriber sub_same_, sub_pos_all_, sub_matrix_,sub_one_, sub_move_j_;
+
+  // 控制器所在的命名空间标签（用于日志输出）
+  std::string controller_ns_;
 
   void sameCb(const std_msgs::Float64MultiArray::ConstPtr& msg);
   void posAllCb(const std_msgs::Float64MultiArray::ConstPtr& msg);
