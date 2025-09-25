@@ -1,30 +1,34 @@
 <launch>
-  <!-- 串口参数写到根空间，供 dmbot_serial::robot 使用（若你用 DmHW+stm32 串口） -->
+  <!-- 为右臂硬件设置私有串口参数 -->
   <arg name="port" default="/dev/mcu_rightarm"/>
   <arg name="baud" default="921600"/>
-  <param name="/port" value="$(arg port)"/>
-  <param name="/baud" value="$(arg baud)"/>
+  <param name="rightarm/port" value="$(arg port)"/>
+  <param name="rightarm/baud" value="$(arg baud)"/>
 
   <!-- 硬件 bringup（会带 controller_manager） -->
-  <include file="$(find legged_dm_hw)/launch/legged_dm_hw.launch"/>
+  <include file="$(find legged_dm_hw)/launch/legged_dm_hw.launch">
+    <arg name="ns" value="rightarm"/>
+  </include>
 
   <!-- 必须：URDF 里已经有这14个 joints -->
-  <rosparam param="rightarm/joint_state_controller">
-    type: joint_state_controller/JointStateController
-    publish_rate: 100
-  </rosparam>
+  <group ns="rightarm">
+    <rosparam param="joint_state_controller">
+      type: joint_state_controller/JointStateController
+      publish_rate: 100
+    </rosparam>
 
-  <rosparam param="rightarm/all_joints_hjc">
-    type: simple_hjc/AllJointsHybridController
-    joints: ['leg_l1_joint','leg_l2_joint','leg_l3_joint','leg_l4_joint','leg_l5_joint','leg_l6_joint','leg_l7_joint',
-             'leg_r1_joint','leg_r2_joint','leg_r3_joint','leg_r4_joint','leg_r5_joint','leg_r6_joint','leg_r7_joint']
-    default_kp: 0.0
-    default_kd: 0.0
-    default_vel: 0.0
-    default_ff:  0.0
-  </rosparam>
+    <rosparam param="all_joints_hjc">
+      type: simple_hjc/AllJointsHybridController
+      joints: ['leg_l1_joint','leg_l2_joint','leg_l3_joint','leg_l4_joint','leg_l5_joint','leg_l6_joint','leg_l7_joint',
+               'leg_r1_joint','leg_r2_joint','leg_r3_joint','leg_r4_joint','leg_r5_joint','leg_r6_joint','leg_r7_joint']
+      default_kp: 0.0
+      default_kd: 0.0
+      default_vel: 0.0
+      default_ff:  0.0
+    </rosparam>
 
-  <node pkg="controller_manager" type="spawner" name="spawner_rightarm"
-        output="screen"
-        args="rightarm/joint_state_controller rightarm/all_joints_hjc"/>
+    <node pkg="controller_manager" type="spawner" name="spawner_rightarm"
+          output="screen"
+          args="joint_state_controller all_joints_hjc"/>
+  </group>
 </launch>
