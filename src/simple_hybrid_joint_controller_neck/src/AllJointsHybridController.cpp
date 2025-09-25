@@ -23,6 +23,13 @@ bool AllJointsHybridController::init(legged::HybridJointInterface* hw, ros::Node
     joint_names_ = kDefaultJointNames;
     ROS_WARN("param '~joints' not set, using default (%zu)", joint_names_.size());
   }
+  controller_ns_ = nh.getNamespace();
+  if (!controller_ns_.empty() && controller_ns_.front() == '/') {
+    controller_ns_.erase(0, 1);
+  }
+  if (controller_ns_.empty()) {
+    controller_ns_ = "AllJointsHybridController";
+  }
   // joint_names_ = kDefaultJointNames;
   N_ = joint_names_.size();
   if (N_ == 0) {
@@ -73,9 +80,14 @@ void AllJointsHybridController::update(const ros::Time&, const ros::Duration&) {
   // 把缓存的命令写到 HybridJointHandle
   for (size_t i = 0; i < N_; ++i) {
     handles_[i].setCommand(cmd_[i][0], cmd_[i][1], cmd_[i][2], cmd_[i][3], cmd_[i][4]);
-    ROS_INFO_THROTTLE(1.0, "[Neck] Controller update running, first joint pos_des=%.3f", cmd_[i][0]);
   }
-  
+
+  if (!cmd_.empty()) {
+    ROS_INFO_THROTTLE(1.0,
+                      "[%s] Controller update running, first joint pos_des=%.3f",
+                      controller_ns_.c_str(), cmd_.front()[0]);
+  }
+
 }
 
 void AllJointsHybridController::sameCb(const std_msgs::Float64MultiArray::ConstPtr& msg) {
