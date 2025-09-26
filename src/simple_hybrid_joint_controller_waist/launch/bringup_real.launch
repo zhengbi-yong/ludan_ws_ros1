@@ -1,0 +1,33 @@
+<launch>
+  <!-- 为腰部硬件设置私有串口参数 -->
+  <arg name="port" default="/dev/mcu_waist"/>
+  <arg name="baud" default="921600"/>
+  <param name="waist/port" value="$(arg port)"/>
+  <param name="waist/baud" value="$(arg baud)"/>
+
+  <!-- 硬件 bringup（会带 controller_manager） -->
+  <include file="$(find legged_dm_hw)/launch/legged_dm_hw.launch">
+    <arg name="ns" value="waist"/>
+  </include>
+
+  <!-- 必须：URDF 里已经有这些腰部 joints -->
+  <group ns="waist">
+    <rosparam param="joint_state_controller">
+      type: joint_state_controller/JointStateController
+      publish_rate: 100
+    </rosparam>
+
+    <rosparam param="all_joints_hjc_waist">
+      type: simple_hjc/AllJointsHybridController
+      joints: ['waist_joint_1','waist_joint_2','waist_joint_3']
+      default_kp: 20.0
+      default_kd: 1.0
+      default_vel: 0.0
+      default_ff:  0.0
+    </rosparam>
+
+    <node pkg="controller_manager" type="spawner" name="spawner_waist"
+          output="screen"
+          args="joint_state_controller all_joints_hjc_waist"/>
+  </group>
+</launch>
