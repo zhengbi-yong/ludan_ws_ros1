@@ -8,6 +8,14 @@
 
 该程序是基于[livelybot_dynamic_control](https://github.com/HighTorque-Robotics/livelybot_dynamic_control)、[hunter_bipedal_control](https://bridgedp.github.io/hunter_bipedal_control)以及[legged_control](https://github.com/qiayuanl/legged_control)上进行一些改进，主要是对**约束**进行了修改。
 
+### 启动阶段电机控制逻辑定位
+
+为了避免系统上电后立即向电机发送非零指令，`legged_examples/*/DmHW.cpp` 中的 `DmHW::read()` 会在第一次读取到电机状态时，将 `jointData_` 的目标位姿与力矩缓存初始化为当前位置和零增量，再允许后续控制器写入新的命令。
+
+- 全身：`src/legged_examples/legged_dm_hw/src/DmHW.cpp`
+- 左臂：`src/legged_examples/leftarm_dm_hw/src/DmHW.cpp`
+- 脖子：`src/legged_examples/neck_dm_hw/src/DmHW.cpp`
+
 ## 学习
 1. 理论框架
 

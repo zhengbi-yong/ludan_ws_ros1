@@ -69,6 +69,7 @@ private:
   int powerLimit_{0};
   int contactThreshold_{0};
   bool estimateContact_[4]{false, false, false, false};
+  bool commandsInitialized_{false};
 
   // 下发缓冲（电机方向映射）
   DmMotorData dmSendcmd_[NUM_JOINTS];
