@@ -13,11 +13,6 @@
     <arg name="robot_type" value="$(arg robot_type)"/>
   </include>
 
-  <include file="$(find left_arm_dm_hw)/launch/neck_dm_hw.launch">
-    <arg name="ns" value="$(arg base_ns)/arms"/>
-    <arg name="robot_type" value="$(arg robot_type)"/>
-  </include>
-
   <include file="$(find neck_dm_hw)/launch/neck_dm_hw.launch">
     <arg name="ns" value="$(arg base_ns)/neck"/>
     <arg name="robot_type" value="$(arg robot_type)"/>
@@ -28,12 +23,6 @@
     <node pkg="controller_manager" type="spawner" name="spawner_legs"
           output="screen"
           args="joint_state_controller legs_left_controller legs_right_controller"/>
-  </group>
-
-  <group ns="$(arg base_ns)/arms">
-    <node pkg="controller_manager" type="spawner" name="spawner_arms"
-          output="screen"
-          args="joint_state_controller arms_left_controller arms_right_controller"/>
   </group>
 
   <group ns="$(arg base_ns)/neck">

@@ -14,37 +14,54 @@
 
 ## 更清晰的工作空间结构
 
-为了便于维护，本工作空间中与左臂相关的功能包已统一采用更直观的命名：
+为减少无用依赖，左臂相关的功能包（`dmbot_serial_left_arm`、`simple_hybrid_joint_controller_left_arm`、`legged_examples/left_arm_dm_hw`）已被彻底移除，只保留腿部、颈部与右臂桥接的实现。统一的 URDF 与命名空间仍然按照 `wanren/legs`、`wanren/neck`（以及可选的 `wanren/right_arm`）进行划分，避免了重复的模型维护工作。
 
-| 旧目录 | 新目录 | 说明 |
-| --- | --- | --- |
-| `dmbot_serial_leftarm` | `dmbot_serial_left_arm` | STM32 串口桥接节点，默认串口由 `/dev/mcu_left_arm` 提供 |
-| `legged_examples/leftarm_dm_hw` | `legged_examples/left_arm_dm_hw` | 左臂达妙硬件接口，实现 `left_arm_dm_hw` 节点 |
-| `simple_hybrid_joint_controller_leftarm` | `simple_hybrid_joint_controller_left_arm` | 左臂混合关节控制器插件 |
+## 快速使用
 
-新的命名同样应用在包名、可执行程序以及 Launch 文件参数中，保证在 `roslaunch` 或 `rosrun` 时更加一目了然。
-
-## 使用示例
-
-1. 编译工作空间
+1. **编译并配置工作空间**
    ```bash
    cd ~/ludan_ws_ros1
-   catkin_make
+   catkin build          # 或使用 catkin_make，视个人习惯选择
    source devel/setup.bash
    ```
-2. 启动左臂硬件接口与控制器（包含串口桥接）
+2. **准备串口别名**（见下文“串口命名与硬件准备”）。确保腿、颈、腰等控制板已经映射为 `/dev/mcu_leg`、`/dev/mcu_neck`、`/dev/mcu_waist`，右臂若使用则映射为 `/dev/mcu_rightarm`。
+3. **启动腿部 + 颈部硬件与控制器**
    ```bash
-   roslaunch simple_hybrid_joint_controller_left_arm bringup_real.launch
+   roslaunch simple_hybrid_joint_controller bringup_real.launch robot_type:=dm base_ns:=wanren
    ```
-   该 Launch 会：
-   - 使用新的 `dmbot_serial_left_arm` 串口节点（默认串口 `/dev/mcu_left_arm`）。
-   - 载入 `left_arm_dm_hw` 硬件接口并发布 `left_arm_dm_hw` 命名空间下的参数。
-   - 通过 `controller_manager` 加载 `all_joints_hjc_left_arm` 控制器。
-3. 如需整体启动双足机器人，可继续使用原有入口：
+   该入口会加载统一 URDF，启动 `legged_dm_hw` 与 `neck_dm_hw`，并在 `wanren/legs`、`wanren/neck` 命名空间下自动装载对应的混合关节控制器。
+4. **右臂（可选）** 若需要右臂的 MoveJ 桥接，可单独启动：
    ```bash
-   roslaunch simple_hybrid_joint_controller bringup_real.launch
+   roslaunch right_arm_hw bringup.launch
    ```
-   该入口会在更新后的目录结构下自动查找到左臂硬件接口。
+   然后向 `/all_joints_hjc/command_moveJ` 或自定义话题发送命令。
+
+如需调试腿部或颈部的混合控制器，可直接向 `wanren/legs`、`wanren/neck` 命名空间下的控制话题发布命令；硬件接口会根据 `wanren_arm/config/wanren_controllers.yaml` 中定义的关节顺序进行映射。【F:wanren_arm/config/wanren_controllers.yaml†L1-L41】
+
+### 串口命名与硬件准备
+
+实机运行前请统一各控制板的串口设备名，便于 Launch 文件直接引用：
+
+1. **确认设备信息**：插入控制板后，使用下面的命令查看其 `idVendor`、`idProduct` 以及 `serial` 等属性。
+   ```bash
+   udevadm info -a -n /dev/ttyACM0 | grep -E "(idVendor|idProduct|serial)"
+   ```
+2. **编写 udev 规则**：根据实际硬件信息在 `/etc/udev/rules.d/99-wanren-mcu.rules` 中写入类似规则（请将示例值替换为自己的设备 ID）。
+   ```
+   SUBSYSTEM=="tty", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="6015", ATTRS{serial}=="LEG",   SYMLINK+="mcu_leg",     MODE="0666"
+   SUBSYSTEM=="tty", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="6015", ATTRS{serial}=="NECK",  SYMLINK+="mcu_neck",    MODE="0666"
+   SUBSYSTEM=="tty", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="6015", ATTRS{serial}=="WAIST", SYMLINK+="mcu_waist",   MODE="0666"
+   SUBSYSTEM=="tty", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="6015", ATTRS{serial}=="RARM",  SYMLINK+="mcu_rightarm", MODE="0666"
+   ```
+3. **刷新规则并验证**：
+   ```bash
+   sudo udevadm control --reload-rules
+   sudo udevadm trigger
+   ls -l /dev/mcu_*
+   ```
+   如无权限问题，请确保当前用户加入 `dialout` 组：`sudo usermod -a -G dialout $USER`。
+
+系统默认的 Launch/节点已经使用上述别名：腿部硬件默认 `/dev/mcu_leg`，颈部硬件默认 `/dev/mcu_neck`，腰部默认 `/dev/mcu_waist`，右臂桥接默认 `/dev/mcu_rightarm`。【F:simple_hybrid_joint_controller_leg/launch/bringup_real.launch†L3-L4】【F:simple_hybrid_joint_controller_neck/launch/bringup_real.launch†L3-L4】【F:simple_hybrid_joint_controller_waist/launch/bringup_real.launch†L3-L4】【F:dmbot_serial/src/robot_connect.cpp†L9-L96】【F:dmbot_serial_neck/src/robot_connect.cpp†L9-L96】确保符号链接正确后，即可直接运行上述 Launch 文件。
 
 ## 学习
 1. 理论框架
