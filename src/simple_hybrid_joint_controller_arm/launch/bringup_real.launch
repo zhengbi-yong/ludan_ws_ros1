@@ -1,0 +1,33 @@
+<launch>
+  <!-- 为手臂硬件设置私有串口参数 -->
+  <arg name="port" default="/dev/mcu_arm"/>
+  <arg name="baud" default="921600"/>
+  <param name="arm/port" value="$(arg port)"/>
+  <param name="arm/baud" value="$(arg baud)"/>
+
+  <!-- 硬件 bringup（会带 controller_manager） -->
+  <include file="$(find legged_dm_hw)/launch/legged_dm_hw.launch">
+    <arg name="ns" value="arm"/>
+  </include>
+
+  <!-- 必须：URDF 里已经有这些手臂 joints -->
+  <group ns="arm">
+    <rosparam param="joint_state_controller">
+      type: joint_state_controller/JointStateController
+      publish_rate: 100
+    </rosparam>
+
+    <rosparam param="all_joints_hjc_arm">
+      type: simple_hjc/AllJointsHybridController
+      joints: ['arm_joint_1','arm_joint_2','arm_joint_3','arm_joint_4','arm_joint_5','arm_joint_6','arm_joint_7']
+      default_kp: 20.0
+      default_kd: 1.0
+      default_vel: 0.0
+      default_ff:  0.0
+    </rosparam>
+
+    <node pkg="controller_manager" type="spawner" name="spawner_arm"
+          output="screen"
+          args="joint_state_controller all_joints_hjc_arm"/>
+  </group>
+</launch>
