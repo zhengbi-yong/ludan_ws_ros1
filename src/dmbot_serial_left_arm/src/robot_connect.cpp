@@ -6,7 +6,7 @@ namespace dmbot_serial
 robot::robot()
 {
 
-  n.param("port", motor_serial_port, std::string("/dev/mcu_leftarm")); 
+  n.param("port", motor_serial_port, std::string("/dev/mcu_left_arm"));
   n.param("baud", motor_seial_baud, 921600);
   
   int i=0;

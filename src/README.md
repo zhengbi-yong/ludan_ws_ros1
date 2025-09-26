@@ -12,6 +12,40 @@
 
 `wanren_arm/urdf/wanren_arm.urdf` 现在同时包含身体、左右两条腿、左右两条手臂以及颈部关节链，无需再维护多份 URDF。与之配套的控制命名空间按照 `wanren/legs`、`wanren/arms`、`wanren/neck` 进行划分，可通过 `simple_hybrid_joint_controller/launch/bringup_real.launch` 一次性加载所有硬件接口与控制器。各硬件包会从参数 `joint_names` 中读取明确的关节顺序，避免再根据字符串前缀做模糊匹配。
 
+## 更清晰的工作空间结构
+
+为了便于维护，本工作空间中与左臂相关的功能包已统一采用更直观的命名：
+
+| 旧目录 | 新目录 | 说明 |
+| --- | --- | --- |
+| `dmbot_serial_leftarm` | `dmbot_serial_left_arm` | STM32 串口桥接节点，默认串口由 `/dev/mcu_left_arm` 提供 |
+| `legged_examples/leftarm_dm_hw` | `legged_examples/left_arm_dm_hw` | 左臂达妙硬件接口，实现 `left_arm_dm_hw` 节点 |
+| `simple_hybrid_joint_controller_leftarm` | `simple_hybrid_joint_controller_left_arm` | 左臂混合关节控制器插件 |
+
+新的命名同样应用在包名、可执行程序以及 Launch 文件参数中，保证在 `roslaunch` 或 `rosrun` 时更加一目了然。
+
+## 使用示例
+
+1. 编译工作空间
+   ```bash
+   cd ~/ludan_ws_ros1
+   catkin_make
+   source devel/setup.bash
+   ```
+2. 启动左臂硬件接口与控制器（包含串口桥接）
+   ```bash
+   roslaunch simple_hybrid_joint_controller_left_arm bringup_real.launch
+   ```
+   该 Launch 会：
+   - 使用新的 `dmbot_serial_left_arm` 串口节点（默认串口 `/dev/mcu_left_arm`）。
+   - 载入 `left_arm_dm_hw` 硬件接口并发布 `left_arm_dm_hw` 命名空间下的参数。
+   - 通过 `controller_manager` 加载 `all_joints_hjc_left_arm` 控制器。
+3. 如需整体启动双足机器人，可继续使用原有入口：
+   ```bash
+   roslaunch simple_hybrid_joint_controller bringup_real.launch
+   ```
+   该入口会在更新后的目录结构下自动查找到左臂硬件接口。
+
 ## 学习
 1. 理论框架
 

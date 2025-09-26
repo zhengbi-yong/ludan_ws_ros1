@@ -6,7 +6,7 @@
   <param name="arm/baud" value="$(arg baud)"/>
 
   <!-- 硬件 bringup（会带 controller_manager） -->
-  <include file="$(find leftarm_dm_hw)/launch/neck_dm_hw.launch">
+  <include file="$(find left_arm_dm_hw)/launch/neck_dm_hw.launch">
     <arg name="ns" value="arm"/>
   </include>
 

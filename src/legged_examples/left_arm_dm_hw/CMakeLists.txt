@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(leftarm_dm_hw)
+project(left_arm_dm_hw)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")  
@@ -39,14 +39,14 @@ include_directories(
 )
 
 ## Declare cpp executables
-add_executable(leftarm_dm_hw 
+add_executable(left_arm_dm_hw
         src/legged_dm_hw.cpp
         src/DmHW.cpp)
 
 ## Specify libraries to link executable targets against
-target_link_libraries(leftarm_dm_hw 
-        ${catkin_LIBRARIES} 
-        ) 
+target_link_libraries(left_arm_dm_hw
+        ${catkin_LIBRARIES}
+        )
 
 # add
 ##add_subdirectory(app/thirdparty)
@@ -69,14 +69,14 @@ find_package(Boost REQUIRED)
 
 
 
-target_link_libraries(leftarm_dm_hw)
+target_link_libraries(left_arm_dm_hw)
 
 #########################
 ###   CLANG TOOLING   ###
 #########################
 find_package(cmake_clang_tools QUIET)
 if (cmake_clang_tools_FOUND)
-    message(STATUS "Run clang tooling for target " leftarm_dm_hw)
+    message(STATUS "Run clang tooling for target " left_arm_dm_hw)
     add_clang_tooling(
             TARGETS legged_unitree_hw_go1
             SOURCE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/include/legged_unitree_hw
@@ -91,7 +91,7 @@ endif (cmake_clang_tools_FOUND)
 
 # Mark executables and/or libraries for installation
 
-install(TARGETS leftarm_dm_hw
+install(TARGETS left_arm_dm_hw
         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
