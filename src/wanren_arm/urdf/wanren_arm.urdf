@@ -407,6 +407,821 @@
       xyz="0.804819794366103 -0.559061164385712 -0.199288015375224" />
   </joint>
 
+
+  <!-- Added neck and arm kinematics -->
+  <!-- Neck base -->
+  <link name="neck_mount_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.200"/>
+      <inertia ixx="0.000600" ixy="0" ixz="0" iyy="0.000600" iyz="0" izz="0.000600"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.050"/>
+      </geometry>
+      <material name="neck_mount">
+        <color rgba="0.4 0.4 0.4 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.050"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_mount_fixed" type="fixed">
+    <origin xyz="0 0 0.45" rpy="0 0 0"/>
+    <parent link="body"/>
+    <child link="neck_mount_link"/>
+  </joint>
+  <link name="neck_left_link_1">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_left_link_2">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_left_link_3">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_left_link_4">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_left_link_5">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_left_link_6">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_left_link_7">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_left_joint_1" type="continuous">
+    <origin xyz="0.000 0.060 0.000" rpy="0 0 0"/>
+    <parent link="neck_mount_link"/>
+    <child link="neck_left_link_1"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="neck_left_joint_2" type="continuous">
+    <origin xyz="0.000 0.000 0.080" rpy="0 0 0"/>
+    <parent link="neck_left_link_1"/>
+    <child link="neck_left_link_2"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="neck_left_joint_3" type="continuous">
+    <origin xyz="0.000 0.000 0.080" rpy="0 0 0"/>
+    <parent link="neck_left_link_2"/>
+    <child link="neck_left_link_3"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="neck_left_joint_4" type="continuous">
+    <origin xyz="0.000 0.000 0.080" rpy="0 0 0"/>
+    <parent link="neck_left_link_3"/>
+    <child link="neck_left_link_4"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="neck_left_joint_5" type="continuous">
+    <origin xyz="0.000 0.000 0.080" rpy="0 0 0"/>
+    <parent link="neck_left_link_4"/>
+    <child link="neck_left_link_5"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="neck_left_joint_6" type="continuous">
+    <origin xyz="0.000 0.000 0.080" rpy="0 0 0"/>
+    <parent link="neck_left_link_5"/>
+    <child link="neck_left_link_6"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="neck_left_joint_7" type="continuous">
+    <origin xyz="0.000 0.000 0.080" rpy="0 0 0"/>
+    <parent link="neck_left_link_6"/>
+    <child link="neck_left_link_7"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <link name="neck_right_link_1">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_right_link_2">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_right_link_3">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_right_link_4">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_right_link_5">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_right_link_6">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="neck_right_link_7">
+    <inertial>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <mass value="0.080"/>
+      <inertia ixx="0.000043" ixy="0" ixz="0" iyy="0.000043" iyz="0" izz="0.000016"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.040" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.020" length="0.080"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_right_joint_1" type="continuous">
+    <origin xyz="0.000 -0.060 0.000" rpy="0 0 0"/>
+    <parent link="neck_mount_link"/>
+    <child link="neck_right_link_1"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="neck_right_joint_2" type="continuous">
+    <origin xyz="0.000 0.000 0.080" rpy="0 0 0"/>
+    <parent link="neck_right_link_1"/>
+    <child link="neck_right_link_2"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="neck_right_joint_3" type="continuous">
+    <origin xyz="0.000 0.000 0.080" rpy="0 0 0"/>
+    <parent link="neck_right_link_2"/>
+    <child link="neck_right_link_3"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="neck_right_joint_4" type="continuous">
+    <origin xyz="0.000 0.000 0.080" rpy="0 0 0"/>
+    <parent link="neck_right_link_3"/>
+    <child link="neck_right_link_4"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="neck_right_joint_5" type="continuous">
+    <origin xyz="0.000 0.000 0.080" rpy="0 0 0"/>
+    <parent link="neck_right_link_4"/>
+    <child link="neck_right_link_5"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="neck_right_joint_6" type="continuous">
+    <origin xyz="0.000 0.000 0.080" rpy="0 0 0"/>
+    <parent link="neck_right_link_5"/>
+    <child link="neck_right_link_6"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="neck_right_joint_7" type="continuous">
+    <origin xyz="0.000 0.000 0.080" rpy="0 0 0"/>
+    <parent link="neck_right_link_6"/>
+    <child link="neck_right_link_7"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <link name="arm_left_link_1">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm_left_link_2">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm_left_link_3">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm_left_link_4">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm_left_link_5">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm_left_link_6">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm_left_link_7">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_left_joint_1" type="continuous">
+    <origin xyz="0.050 0.250 0.250" rpy="0 0 0"/>
+    <parent link="body"/>
+    <child link="arm_left_link_1"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="arm_left_joint_2" type="continuous">
+    <origin xyz="0.000 0.000 0.180" rpy="0 0 0"/>
+    <parent link="arm_left_link_1"/>
+    <child link="arm_left_link_2"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="arm_left_joint_3" type="continuous">
+    <origin xyz="0.000 0.000 0.180" rpy="0 0 0"/>
+    <parent link="arm_left_link_2"/>
+    <child link="arm_left_link_3"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="arm_left_joint_4" type="continuous">
+    <origin xyz="0.000 0.000 0.180" rpy="0 0 0"/>
+    <parent link="arm_left_link_3"/>
+    <child link="arm_left_link_4"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="arm_left_joint_5" type="continuous">
+    <origin xyz="0.000 0.000 0.180" rpy="0 0 0"/>
+    <parent link="arm_left_link_4"/>
+    <child link="arm_left_link_5"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="arm_left_joint_6" type="continuous">
+    <origin xyz="0.000 0.000 0.180" rpy="0 0 0"/>
+    <parent link="arm_left_link_5"/>
+    <child link="arm_left_link_6"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="arm_left_joint_7" type="continuous">
+    <origin xyz="0.000 0.000 0.180" rpy="0 0 0"/>
+    <parent link="arm_left_link_6"/>
+    <child link="arm_left_link_7"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <link name="arm_right_link_1">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm_right_link_2">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm_right_link_3">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm_right_link_4">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm_right_link_5">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm_right_link_6">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm_right_link_7">
+    <inertial>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <mass value="0.120"/>
+      <inertia ixx="0.000324" ixy="0" ixz="0" iyy="0.000324" iyz="0" izz="0.000038"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+      <material name="aluminum">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.090" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.180"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_right_joint_1" type="continuous">
+    <origin xyz="0.050 -0.250 0.250" rpy="0 0 0"/>
+    <parent link="body"/>
+    <child link="arm_right_link_1"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="arm_right_joint_2" type="continuous">
+    <origin xyz="0.000 0.000 0.180" rpy="0 0 0"/>
+    <parent link="arm_right_link_1"/>
+    <child link="arm_right_link_2"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="arm_right_joint_3" type="continuous">
+    <origin xyz="0.000 0.000 0.180" rpy="0 0 0"/>
+    <parent link="arm_right_link_2"/>
+    <child link="arm_right_link_3"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="arm_right_joint_4" type="continuous">
+    <origin xyz="0.000 0.000 0.180" rpy="0 0 0"/>
+    <parent link="arm_right_link_3"/>
+    <child link="arm_right_link_4"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="arm_right_joint_5" type="continuous">
+    <origin xyz="0.000 0.000 0.180" rpy="0 0 0"/>
+    <parent link="arm_right_link_4"/>
+    <child link="arm_right_link_5"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="arm_right_joint_6" type="continuous">
+    <origin xyz="0.000 0.000 0.180" rpy="0 0 0"/>
+    <parent link="arm_right_link_5"/>
+    <child link="arm_right_link_6"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="arm_right_joint_7" type="continuous">
+    <origin xyz="0.000 0.000 0.180" rpy="0 0 0"/>
+    <parent link="arm_right_link_6"/>
+    <child link="arm_right_link_7"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
   <transmission name="trans_leg_r1">
   <type>transmission_interface/SimpleTransmission</type>
   <actuator name="motor_leg_r1">
@@ -920,5 +1735,314 @@
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
+
+  <transmission name="trans_neck_left_joint_1">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_left_joint_1">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_left_joint_1">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_left_joint_2">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_left_joint_2">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_left_joint_2">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_left_joint_3">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_left_joint_3">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_left_joint_3">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_left_joint_4">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_left_joint_4">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_left_joint_4">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_left_joint_5">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_left_joint_5">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_left_joint_5">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_left_joint_6">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_left_joint_6">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_left_joint_6">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_left_joint_7">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_left_joint_7">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_left_joint_7">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_right_joint_1">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_right_joint_1">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_right_joint_1">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_right_joint_2">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_right_joint_2">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_right_joint_2">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_right_joint_3">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_right_joint_3">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_right_joint_3">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_right_joint_4">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_right_joint_4">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_right_joint_4">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_right_joint_5">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_right_joint_5">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_right_joint_5">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_right_joint_6">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_right_joint_6">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_right_joint_6">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_neck_right_joint_7">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_neck_right_joint_7">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="neck_right_joint_7">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_left_joint_1">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_left_joint_1">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_left_joint_1">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_left_joint_2">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_left_joint_2">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_left_joint_2">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_left_joint_3">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_left_joint_3">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_left_joint_3">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_left_joint_4">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_left_joint_4">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_left_joint_4">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_left_joint_5">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_left_joint_5">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_left_joint_5">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_left_joint_6">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_left_joint_6">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_left_joint_6">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_left_joint_7">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_left_joint_7">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_left_joint_7">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_right_joint_1">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_right_joint_1">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_right_joint_1">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_right_joint_2">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_right_joint_2">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_right_joint_2">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_right_joint_3">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_right_joint_3">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_right_joint_3">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_right_joint_4">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_right_joint_4">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_right_joint_4">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_right_joint_5">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_right_joint_5">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_right_joint_5">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_right_joint_6">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_right_joint_6">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_right_joint_6">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
+  <transmission name="trans_arm_right_joint_7">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_arm_right_joint_7">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="arm_right_joint_7">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+
 
 </robot>

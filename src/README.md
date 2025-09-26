@@ -8,6 +8,10 @@
 
 该程序是基于[livelybot_dynamic_control](https://github.com/HighTorque-Robotics/livelybot_dynamic_control)、[hunter_bipedal_control](https://bridgedp.github.io/hunter_bipedal_control)以及[legged_control](https://github.com/qiayuanl/legged_control)上进行一些改进，主要是对**约束**进行了修改。
 
+## 统一的机器人描述与命名空间
+
+`wanren_arm/urdf/wanren_arm.urdf` 现在同时包含身体、左右两条腿、左右两条手臂以及颈部关节链，无需再维护多份 URDF。与之配套的控制命名空间按照 `wanren/legs`、`wanren/arms`、`wanren/neck` 进行划分，可通过 `simple_hybrid_joint_controller/launch/bringup_real.launch` 一次性加载所有硬件接口与控制器。各硬件包会从参数 `joint_names` 中读取明确的关节顺序，避免再根据字符串前缀做模糊匹配。
+
 ## 学习
 1. 理论框架
 

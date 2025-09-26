@@ -3,8 +3,7 @@
     <arg name="ns" default="" doc="Namespace for the hardware node"/>
 
     <group ns="$(arg ns)">
-        <!-- <param name="legged_robot_description" command="$(find xacro)/xacro $(find legged_dm_description)/urdf/dm.urdf -->
-        <param name="legged_robot_description" command="$(find xacro)/xacro $(find wanren_arm)/urdf/wanren_arm_neck.urdf
+        <param name="legged_robot_description" command="$(find xacro)/xacro $(find wanren_arm)/urdf/wanren_arm.urdf
             robot_type:=$(arg robot_type) "/>
         <param name="manual_topic_override" value="true"/>
         <param name="manual_cmd_timeout" value="0.2"/>
