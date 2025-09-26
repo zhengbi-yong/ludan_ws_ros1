@@ -4,4 +4,6 @@ legged_dm_hw:
   thread_priority: 95
   power_limit: 6
   contact_threshold: 200
+  # 关节索引 -> 实际电机 CAN ID 映射（-1 表示禁用该关节）。默认保持 0..13 顺序，可按需修改。
+  motor_id_map: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
