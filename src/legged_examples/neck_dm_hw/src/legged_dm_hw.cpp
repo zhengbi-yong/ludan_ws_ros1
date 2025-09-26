@@ -62,11 +62,11 @@ int main(int argc, char** argv)
 
   try
   {
-    std::shared_ptr<legged::DmHW> legged_dm_hw = std::make_shared<legged::DmHW>();
+    std::shared_ptr<ludan::DmHW> hardware = std::make_shared<ludan::DmHW>();
 
-    legged_dm_hw->init(nh, robot_hw_nh);
+    hardware->init(nh, robot_hw_nh);
 
-    legged::LeggedHWLoop control_loop(nh, legged_dm_hw);
+    ludan::LeggedHWLoop control_loop(nh, hardware);
 
     ros::waitForShutdown();
   }

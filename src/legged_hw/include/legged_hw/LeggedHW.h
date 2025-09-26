@@ -26,6 +26,7 @@ at www.bridgedp.com.
 #include <hardware_interface/robot_hw.h>
 #include <legged_common/hardware_interface/ContactSensorInterface.h>
 #include <legged_common/hardware_interface/HybridJointInterface.h>
+#include <legged_common/namespaces.h>
 #include <dmbot_serial/robot_connect.h>
 //#include <dmbot_serial/robot3.h>
 // #include <ahrs_driver.h>
