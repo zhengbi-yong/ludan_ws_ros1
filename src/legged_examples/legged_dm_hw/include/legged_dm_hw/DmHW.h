@@ -13,7 +13,6 @@
 #include <string>
 
 #include <memory>
-static constexpr int NUM_JOINTS = 14;
 namespace legged
 {
 
@@ -54,6 +53,10 @@ private:
   // 内部初始化
   bool setupJoints();
   bool setupImu();
+  bool loadJointConfiguration(const ros::NodeHandle& robot_hw_nh);
+  bool flattenJointModules(const ros::NodeHandle& robot_hw_nh,
+                           std::vector<std::string>& names,
+                           std::vector<int>& directions) const;
 
   // 话题覆盖回调
   void hybridCmdCb(const std_msgs::Float64MultiArray::ConstPtr& msg);
@@ -65,32 +68,30 @@ private:
   ros::Subscriber hybrid_cmd_sub_, emg_sub_;
 
   // 设备与配置
-  DmMotorData jointData_[NUM_JOINTS]{};
+  std::vector<DmMotorData> jointData_;
   DmImuData imuData_{};
   int powerLimit_{0};
   int contactThreshold_{0};
   bool estimateContact_[4]{false, false, false, false};
 
   // Optional configuration to override the joint discovery order
-  std::vector<std::string> configuredJointNames_;
+  std::vector<std::string> jointNames_;
+  std::vector<int> directionMotor_;
+  size_t numJoints_{0};
 
   // 下发缓冲（电机方向映射）
-  DmMotorData dmSendcmd_[NUM_JOINTS];
-  const std::vector<int> directionMotor_{ 
-    1, 1, -1, 1, 1,   -1, 1,    // 左腿 0..6
-    -1, -1, -1, 1, 1, -1, 1     // 右腿 7..13 例子，按需改
-  };
+  std::vector<DmMotorData> dmSendcmd_;
 
   // 外部IMU缓存
   sensor_msgs::Imu yesenceIMU_;
 
   // 手动覆盖相关
   std::mutex cmd_mtx_;
-  std::array<double,NUM_JOINTS> cmd_pos_{};
-  std::array<double,NUM_JOINTS> cmd_vel_{};
-  std::array<double,NUM_JOINTS> cmd_kp_{};
-  std::array<double,NUM_JOINTS> cmd_kd_{};
-  std::array<double,NUM_JOINTS> cmd_tau_{};
+  std::vector<double> cmd_pos_;
+  std::vector<double> cmd_vel_;
+  std::vector<double> cmd_kp_;
+  std::vector<double> cmd_kd_;
+  std::vector<double> cmd_tau_;
   ros::Time last_cmd_stamp_;
   bool emergency_stop_{false};
   bool manual_override_{false};

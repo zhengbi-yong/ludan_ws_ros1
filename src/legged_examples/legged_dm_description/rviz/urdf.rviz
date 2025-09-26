@@ -73,72 +73,72 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_l1_link:
+        leg_left_link_1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_l2_link:
+        leg_left_link_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_l3_link:
+        leg_left_link_3:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_l4_link:
+        leg_left_link_4:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_l5_link:
+        leg_left_link_5:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_l_f1_link:
+        leg_left_f1_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_l_f2_link:
+        leg_left_f2_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_r1_link:
+        leg_right_link_1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_r2_link:
+        leg_right_link_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_r3_link:
+        leg_right_link_3:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_r4_link:
+        leg_right_link_4:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_r5_link:
+        leg_right_link_5:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_r_f1_link:
+        leg_right_f1_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        leg_r_f2_link:
+        leg_right_f2_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -160,33 +160,33 @@ Visualization Manager:
           Value: true
         imu_link:
           Value: true
-        leg_l1_link:
+        leg_left_link_1:
           Value: true
-        leg_l2_link:
+        leg_left_link_2:
           Value: true
-        leg_l3_link:
+        leg_left_link_3:
           Value: true
-        leg_l4_link:
+        leg_left_link_4:
           Value: true
-        leg_l5_link:
+        leg_left_link_5:
           Value: true
-        leg_l_f1_link:
+        leg_left_f1_link:
           Value: true
-        leg_l_f2_link:
+        leg_left_f2_link:
           Value: true
-        leg_r1_link:
+        leg_right_link_1:
           Value: true
-        leg_r2_link:
+        leg_right_link_2:
           Value: true
-        leg_r3_link:
+        leg_right_link_3:
           Value: true
-        leg_r4_link:
+        leg_right_link_4:
           Value: true
-        leg_r5_link:
+        leg_right_link_5:
           Value: true
-        leg_r_f1_link:
+        leg_right_f1_link:
           Value: true
-        leg_r_f2_link:
+        leg_right_f2_link:
           Value: true
       Marker Alpha: 1
       Marker Scale: 0.10000000149011612
@@ -198,23 +198,23 @@ Visualization Manager:
         base_link:
           imu_link:
             {}
-          leg_l1_link:
-            leg_l2_link:
-              leg_l3_link:
-                leg_l4_link:
-                  leg_l5_link:
-                    leg_l_f1_link:
+          leg_left_link_1:
+            leg_left_link_2:
+              leg_left_link_3:
+                leg_left_link_4:
+                  leg_left_link_5:
+                    leg_left_f1_link:
                       {}
-                    leg_l_f2_link:
+                    leg_left_f2_link:
                       {}
-          leg_r1_link:
-            leg_r2_link:
-              leg_r3_link:
-                leg_r4_link:
-                  leg_r5_link:
-                    leg_r_f1_link:
+          leg_right_link_1:
+            leg_right_link_2:
+              leg_right_link_3:
+                leg_right_link_4:
+                  leg_right_link_5:
+                    leg_right_f1_link:
                       {}
-                    leg_r_f2_link:
+                    leg_right_f2_link:
                       {}
       Update Interval: 0
       Value: true

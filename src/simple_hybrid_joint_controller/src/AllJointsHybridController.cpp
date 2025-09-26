@@ -6,8 +6,8 @@ namespace simple_hjc {
 
 // 如果未在参数里给 joints，就按这个默认（可改成 14 路）
 static const std::vector<std::string> kDefaultJointNames = {
-  "leg_l1_joint","leg_l2_joint","leg_l3_joint","leg_l4_joint","leg_l5_joint","leg_l6_joint","leg_l7_joint",
-  "leg_r1_joint","leg_r2_joint","leg_r3_joint","leg_r4_joint","leg_r5_joint","leg_r6_joint","leg_r7_joint"
+  "leg_left_joint_1","leg_left_joint_2","leg_left_joint_3","leg_left_joint_4","leg_left_joint_5","leg_left_joint_6","leg_left_joint_7",
+  "leg_right_joint_1","leg_right_joint_2","leg_right_joint_3","leg_right_joint_4","leg_right_joint_5","leg_right_joint_6","leg_right_joint_7"
 };
 
 bool AllJointsHybridController::init(legged::HybridJointInterface* hw, ros::NodeHandle& nh) {
