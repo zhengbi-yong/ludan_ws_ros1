@@ -98,6 +98,7 @@ private:
   bool emergency_stop_{false};
   bool manual_override_{false};
   double manual_cmd_timeout_{0.2};  // 秒
+  bool commandsInitialized_{false};
 };
 
 } // namespace legged
