@@ -1,17 +1,14 @@
 <launch>
-  <!-- 为手臂硬件设置私有串口参数 -->
-  <arg name="port" default="/dev/mcu_arm"/>
-  <arg name="baud" default="921600"/>
-  <param name="arm/port" value="$(arg port)"/>
-  <param name="arm/baud" value="$(arg baud)"/>
+  <arg name="controller_ns" default="wanren/right_arm"/>
+  <arg name="spawn_controllers" default="false"/>
 
-  <!-- 硬件 bringup（会带 controller_manager） -->
-  <include file="$(find left_arm_dm_hw)/launch/neck_dm_hw.launch">
-    <arg name="ns" value="arm"/>
-  </include>
+  <!--
+    左臂硬件包已经移除，此处仅保留一个可选的控制器加载入口。
+    若已经通过其他方式启动了右臂的 controller_manager（例如自定义 RobotHW），
+    可将 spawn_controllers 设为 true 并调整 controller_ns，使其指向对应命名空间。
+  -->
 
-  <!-- 必须：URDF 里已经有这些手臂 joints -->
-  <group ns="arm">
+  <group if="$(arg spawn_controllers)" ns="$(arg controller_ns)">
     <rosparam param="joint_state_controller">
       type: joint_state_controller/JointStateController
       publish_rate: 100
