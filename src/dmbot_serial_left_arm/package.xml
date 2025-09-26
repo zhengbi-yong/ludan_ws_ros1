@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>dmbot_serial_leftarm</name>
+  <name>dmbot_serial_left_arm</name>
   <version>0.0.0</version>
   <description>The dmbot_serial package</description>
 

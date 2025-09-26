@@ -1,4 +1,4 @@
-<library path="lib/libsimple_hybrid_joint_controller_leftarm">
+<library path="lib/libsimple_hybrid_joint_controller_left_arm">
   <class name="simple_hjc/AllJointsHybridController"
          type="simple_hjc::AllJointsHybridController"
          base_class_type="controller_interface::ControllerBase">

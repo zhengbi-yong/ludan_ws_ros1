@@ -13,7 +13,7 @@
     <arg name="robot_type" value="$(arg robot_type)"/>
   </include>
 
-  <include file="$(find leftarm_dm_hw)/launch/neck_dm_hw.launch">
+  <include file="$(find left_arm_dm_hw)/launch/neck_dm_hw.launch">
     <arg name="ns" value="$(arg base_ns)/arms"/>
     <arg name="robot_type" value="$(arg robot_type)"/>
   </include>

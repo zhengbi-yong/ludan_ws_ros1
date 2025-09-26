@@ -1,4 +1,4 @@
-#include "simple_hybrid_joint_controller_leftarm/AllJointsHybridController.h"
+#include "simple_hybrid_joint_controller_left_arm/AllJointsHybridController.h"
 #include <pluginlib/class_list_macros.hpp>
 #include <cmath>
 

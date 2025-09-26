@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(simple_hybrid_joint_controller_leftarm)
+project(simple_hybrid_joint_controller_left_arm)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp

@@ -53,7 +53,7 @@ def encode_pd_q15(pos, vel, kp, kd, scale=1000, big_endian=True):
 
 class Stm32Bridge(object):
     def __init__(self):
-        self.port   = rospy.get_param("~port", "/dev/mcu_leftarm")
+        self.port   = rospy.get_param("~port", "/dev/mcu_left_arm")
         self.baud   = int(rospy.get_param("~baud", 921600))       # 改成 921600
         self.rate_hz= float(rospy.get_param("~rate", 100.0))
         self.mode   = rospy.get_param("~mode", "pd_q15")

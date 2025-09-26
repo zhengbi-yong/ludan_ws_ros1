@@ -1,14 +1,14 @@
 <launch>
   <!-- 串口参数写到根空间，供 dmbot_serial::robot 使用（若你用 DmHW+stm32 串口） -->
-  <arg name="port" default="/dev/mcu_leftarm"/>
+  <arg name="port" default="/dev/mcu_left_arm"/>
   <arg name="baud" default="921600"/>
   <param name="/port" value="$(arg port)"/>
   <param name="/baud" value="$(arg baud)"/>
 
   <!-- 硬件 bringup（会带 controller_manager） -->
-  <include file="$(find leftarm_dm_hw)/launch/neck_dm_hw.launch"/>
+  <include file="$(find left_arm_dm_hw)/launch/neck_dm_hw.launch"/>
   <rosparam>
-  leftarm_dm_hw:
+  left_arm_dm_hw:
     loop_frequency: 500
     cycle_time_error_threshold: 0.002
     thread_priority: 95
@@ -21,7 +21,7 @@
     publish_rate: 100
   </rosparam> -->
 
-  <rosparam param="all_joints_hjc_leftarm">
+  <rosparam param="all_joints_hjc_left_arm">
     type: simple_hjc/AllJointsHybridController
     joints: ['arm_left_joint_1','arm_left_joint_2','arm_left_joint_3','arm_left_joint_4','arm_left_joint_5','arm_left_joint_6','arm_left_joint_7',
              'arm_right_joint_1','arm_right_joint_2','arm_right_joint_3','arm_right_joint_4','arm_right_joint_5','arm_right_joint_6','arm_right_joint_7']
@@ -31,7 +31,7 @@
     default_ff:  0.0
   </rosparam>
 
-  <node pkg="controller_manager" type="spawner" name="spawner_leftarm"
+  <node pkg="controller_manager" type="spawner" name="spawner_left_arm"
         output="screen"
-        args="joint_state_controller all_joints_hjc_leftarm"/>
+        args="joint_state_controller all_joints_hjc_left_arm"/>
 </launch>

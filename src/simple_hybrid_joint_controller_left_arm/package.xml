@@ -1,5 +1,5 @@
 <package format="2">
-  <name>simple_hybrid_joint_controller_leftarm</name>
+  <name>simple_hybrid_joint_controller_left_arm</name>
   <version>0.0.1</version>
   <description>All-joint hybrid controller (pos/vel/kp/kd/ff) for DmHW.</description>
   <maintainer email="you@example.com">you</maintainer>
