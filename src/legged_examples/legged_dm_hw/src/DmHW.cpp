@@ -6,7 +6,8 @@
 
 #include <fstream>
 #include <iostream>
-#include <XmlRpcValue.h>
+#include <xmlrpcpp/XmlRpcException.h>
+#include <xmlrpcpp/XmlRpcValue.h>
 
 namespace legged
 {
@@ -251,9 +252,9 @@ bool DmHW::flattenJointModules(const ros::NodeHandle& robot_hw_nh,
       {
         enabled = static_cast<bool>(module["enabled"]);
       }
-      catch (const XmlRpc::XmlRpcException&)
+      catch (const XmlRpc::XmlRpcException& ex)
       {
-        ROS_WARN("[DmHW] joint_modules[%d].enabled is not boolean, defaulting to true.", i);
+        ROS_WARN("[DmHW] joint_modules[%d].enabled is not boolean, defaulting to true. Error: %s", i, ex.getMessage().c_str());
       }
     }
     if (!enabled)
@@ -289,9 +290,9 @@ bool DmHW::flattenJointModules(const ros::NodeHandle& robot_hw_nh,
           {
             moduleDirections.push_back(static_cast<int>(dir_list[j]));
           }
-          catch (const XmlRpc::XmlRpcException&)
+          catch (const XmlRpc::XmlRpcException& ex)
           {
-            ROS_WARN("[DmHW] joint_modules[%d].directions[%d] not integer, using 1.", i, j);
+            ROS_WARN("[DmHW] joint_modules[%d].directions[%d] not integer, using 1. Error: %s", i, j, ex.getMessage().c_str());
             moduleDirections.push_back(1);
           }
         }
@@ -316,9 +317,9 @@ bool DmHW::flattenJointModules(const ros::NodeHandle& robot_hw_nh,
           directions.push_back(1);
         }
       }
-      catch (const XmlRpc::XmlRpcException&)
+      catch (const XmlRpc::XmlRpcException& ex)
       {
-        ROS_WARN("[DmHW] joint_modules[%d].joints[%d] not a string, skipping entry.", i, j);
+        ROS_WARN("[DmHW] joint_modules[%d].joints[%d] not a string, skipping entry. Error: %s", i, j, ex.getMessage().c_str());
       }
     }
   }
@@ -349,8 +350,8 @@ void DmHW::hybridCmdCb(const std_msgs::Float64MultiArray::ConstPtr& msg)
 {
   if (msg->data.size() != 5 * numJoints_) {
     ROS_WARN_THROTTLE(1.0, "[DmHW] /hybrid_cmd 长度应为%zu(%zupos+%zuvel+%zukp+%zukd+%zutau)，当前=%zu",
-                    5ull * numJoints_, numJoints_, numJoints_, numJoints_, numJoints_, numJoints_,
-                    msg->data.size());
+                      static_cast<size_t>(5 * numJoints_), numJoints_, numJoints_, numJoints_, numJoints_, numJoints_,
+                      msg->data.size());
     return;
   }
   std::lock_guard<std::mutex> lk(cmd_mtx_);
