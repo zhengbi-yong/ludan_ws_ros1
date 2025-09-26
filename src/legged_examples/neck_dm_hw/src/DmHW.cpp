@@ -80,6 +80,20 @@ void DmHW::read(const ros::Time & /*time*/, const ros::Duration & /*period*/)
     jointData_[i].tau_ = tau * directionMotor_[i];
   }
 
+  if (!commandsInitialized_)
+  {
+    for (int i = 0; i < NUM_JOINTS; ++i)
+    {
+      jointData_[i].pos_des_ = jointData_[i].pos_;
+      jointData_[i].vel_des_ = 0.0;
+      jointData_[i].kp_      = 0.0;
+      jointData_[i].kd_      = 0.0;
+      jointData_[i].ff_      = 0.0;
+    }
+    commandsInitialized_ = true;
+    ROS_INFO("[Neck DmHW] Initialized command buffer with current joint states.");
+  }
+
   // IMU 直接用外部 /imu/data
   imuData_.ori[0] = yesenceIMU_.orientation.x;
   imuData_.ori[1] = yesenceIMU_.orientation.y;
