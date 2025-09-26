@@ -6,6 +6,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 namespace legged
 {
@@ -37,6 +38,8 @@ bool DmHW::init(ros::NodeHandle& root_nh, ros::NodeHandle& robot_hw_nh)
 
   robot_hw_nh.getParam("power_limit", powerLimit_);
 
+  loadMotorIdMap(robot_hw_nh);
+
   // 注册关节、IMU句柄
   setupJoints();
   setupImu();
@@ -62,7 +65,16 @@ void DmHW::read(const ros::Time & /*time*/, const ros::Duration & /*period*/)
   double pos, vel, tau;
   for (int i=0; i< NUM_JOINTS; ++i)
   {
-    motorsInterface->get_motor_data(pos, vel, tau, i);
+    const int motor_idx = motorIdMap_[i];
+    if (motor_idx < 0 || motor_idx >= NUM_JOINTS)
+    {
+      jointData_[i].pos_ = 0.0;
+      jointData_[i].vel_ = 0.0;
+      jointData_[i].tau_ = 0.0;
+      continue;
+    }
+
+    motorsInterface->get_motor_data(pos, vel, tau, motor_idx);
     jointData_[i].pos_ = pos * directionMotor_[i];
     jointData_[i].vel_ = vel * directionMotor_[i];
     jointData_[i].tau_ = tau * directionMotor_[i];
@@ -130,22 +142,29 @@ void DmHW::write(const ros::Time& time, const ros::Duration& /*period*/)
       ff      = jointData_[i].ff_;
     }
 
+    const int motor_idx = motorIdMap_[i];
+    if (motor_idx < 0 || motor_idx >= NUM_JOINTS)
+    {
+      dmSendcmd_[i].pos_des_ = 0.0;
+      dmSendcmd_[i].vel_des_ = 0.0;
+      dmSendcmd_[i].kp_      = 0.0;
+      dmSendcmd_[i].kd_      = 0.0;
+      dmSendcmd_[i].ff_      = 0.0;
+      continue;
+    }
+
     // 关节→电机 方向映射
     dmSendcmd_[i].pos_des_ = pos_des * directionMotor_[i];
     dmSendcmd_[i].vel_des_ = vel_des * directionMotor_[i];
     dmSendcmd_[i].kp_      = kp;
     dmSendcmd_[i].kd_      = kd;
     dmSendcmd_[i].ff_      = ff * directionMotor_[i];
-  }
 
-  // 写入下位机
-  for (int i = 0; i < NUM_JOINTS; ++i)
-  {
     motorsInterface->fresh_cmd_motor_data(dmSendcmd_[i].pos_des_,
                                           dmSendcmd_[i].vel_des_,
                                           dmSendcmd_[i].ff_,
                                           dmSendcmd_[i].kp_,
-                                          dmSendcmd_[i].kd_, i);
+                                          dmSendcmd_[i].kd_, motor_idx);
   }
   motorsInterface->send_motor_data();
 
@@ -225,6 +244,66 @@ void DmHW::emgCb(const std_msgs::Float32::ConstPtr& msg)
 {
   emergency_stop_ = (msg->data > 0.5);
   if (emergency_stop_) ROS_ERROR("[DmHW] 接收到急停！");
+}
+
+void DmHW::loadMotorIdMap(const ros::NodeHandle& robot_hw_nh)
+{
+  for (int i = 0; i < NUM_JOINTS; ++i)
+    motorIdMap_[i] = i;
+
+  std::vector<int> motor_ids;
+  if (!robot_hw_nh.getParam("motor_id_map", motor_ids))
+  {
+    ROS_INFO("[DmHW] '~motor_id_map' not set, using default 0..%d", NUM_JOINTS - 1);
+    return;
+  }
+
+  if (motor_ids.size() != NUM_JOINTS)
+  {
+    ROS_WARN("[DmHW] '~motor_id_map' size=%zu, expected %d. Keep default mapping.",
+             motor_ids.size(), NUM_JOINTS);
+    return;
+  }
+
+  std::array<bool, NUM_JOINTS> used{};
+  for (size_t i = 0; i < motor_ids.size(); ++i)
+  {
+    int id = motor_ids[i];
+    if (id == kInvalidMotor)
+    {
+      motorIdMap_[i] = kInvalidMotor;
+      continue;
+    }
+
+    if (id < 0 || id >= NUM_JOINTS)
+    {
+      ROS_WARN("[DmHW] motor_id_map[%zu]=%d out of range [0,%d]. Revert to default mapping.",
+               i, id, NUM_JOINTS - 1);
+      for (int j = 0; j < NUM_JOINTS; ++j)
+        motorIdMap_[j] = j;
+      return;
+    }
+
+    if (used[id])
+    {
+      ROS_WARN("[DmHW] motor_id_map contains duplicate id %d. Revert to default mapping.", id);
+      for (int j = 0; j < NUM_JOINTS; ++j)
+        motorIdMap_[j] = j;
+      return;
+    }
+
+    used[id] = true;
+    motorIdMap_[i] = id;
+  }
+
+  std::ostringstream oss;
+  for (int i = 0; i < NUM_JOINTS; ++i)
+  {
+    if (i)
+      oss << ", ";
+    oss << motorIdMap_[i];
+  }
+  ROS_INFO_STREAM("[DmHW] Using motor_id_map: [" << oss.str() << "]");
 }
 
 } // namespace legged
