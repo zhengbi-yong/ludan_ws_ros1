@@ -9,6 +9,25 @@
   <xacro:arg name="enable_leg_left" default="true" />
   <xacro:arg name="enable_leg_right" default="true" />
 
+  <!-- Normalize optional boolean arguments to safe defaults.
+       "locals().get" allows the file to be processed even when the
+       argument is not provided by older xacro versions that do not
+       implicitly register <xacro:arg> values. -->
+  <xacro:property name="enable_waist_arg" value="${locals().get('enable_waist', 'true')}" />
+  <xacro:property name="enable_waist" value="${str(enable_waist_arg).lower() in ['1', 'true', 'yes']}" />
+  <xacro:property name="enable_neck_left_arg" value="${locals().get('enable_neck_left', 'true')}" />
+  <xacro:property name="enable_neck_left" value="${str(enable_neck_left_arg).lower() in ['1', 'true', 'yes']}" />
+  <xacro:property name="enable_neck_right_arg" value="${locals().get('enable_neck_right', 'true')}" />
+  <xacro:property name="enable_neck_right" value="${str(enable_neck_right_arg).lower() in ['1', 'true', 'yes']}" />
+  <xacro:property name="enable_arm_left_arg" value="${locals().get('enable_arm_left', 'true')}" />
+  <xacro:property name="enable_arm_left" value="${str(enable_arm_left_arg).lower() in ['1', 'true', 'yes']}" />
+  <xacro:property name="enable_arm_right_arg" value="${locals().get('enable_arm_right', 'true')}" />
+  <xacro:property name="enable_arm_right" value="${str(enable_arm_right_arg).lower() in ['1', 'true', 'yes']}" />
+  <xacro:property name="enable_leg_left_arg" value="${locals().get('enable_leg_left', 'true')}" />
+  <xacro:property name="enable_leg_left" value="${str(enable_leg_left_arg).lower() in ['1', 'true', 'yes']}" />
+  <xacro:property name="enable_leg_right_arg" value="${locals().get('enable_leg_right', 'true')}" />
+  <xacro:property name="enable_leg_right" value="${str(enable_leg_right_arg).lower() in ['1', 'true', 'yes']}" />
+
   <!-- Base reference link -->
   <link name="base_link">
     <inertial>
