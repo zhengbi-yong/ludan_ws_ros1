@@ -36,6 +36,7 @@ bool DmHW::init(ros::NodeHandle& root_nh, ros::NodeHandle& robot_hw_nh)
     return false;
 
   robot_hw_nh.getParam("power_limit", powerLimit_);
+  robot_hw_nh.getParam("joint_names", configuredJointNames_);
 
   // 注册关节、IMU句柄
   setupJoints();
@@ -144,6 +145,37 @@ void DmHW::write(const ros::Time& time, const ros::Duration& /*period*/)
 
 bool DmHW::setupJoints()
 {
+  if (!configuredJointNames_.empty())
+  {
+    if (configuredJointNames_.size() != NUM_JOINTS)
+    {
+      ROS_ERROR("[DmHW] joint_names param expects %d entries, got %zu", NUM_JOINTS, configuredJointNames_.size());
+      return false;
+    }
+
+    for (size_t index = 0; index < configuredJointNames_.size(); ++index)
+    {
+      const auto& name = configuredJointNames_[index];
+      if (!urdfModel_->getJoint(name))
+      {
+        ROS_ERROR("[DmHW] Joint '%s' from joint_names param not found in URDF", name.c_str());
+        return false;
+      }
+
+      hardware_interface::JointStateHandle state_handle(
+        name, &jointData_[index].pos_, &jointData_[index].vel_, &jointData_[index].tau_);
+      jointStateInterface_.registerHandle(state_handle);
+
+      hybridJointInterface_.registerHandle(HybridJointHandle(
+        state_handle,
+        &jointData_[index].pos_des_, &jointData_[index].vel_des_,
+        &jointData_[index].kp_, &jointData_[index].kd_, &jointData_[index].ff_));
+    }
+
+    ROS_INFO_STREAM("[DmHW] Registered joints from parameter joint_names.");
+    return true;
+  }
+
   const int JOINTS_PER_LEG = 7;
   for (const auto& joint : urdfModel_->joints_)
   {

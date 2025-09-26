@@ -10,6 +10,7 @@
 #include <mutex>
 #include <array>
 #include <vector>
+#include <string>
 
 #include <memory>
 static constexpr int NUM_JOINTS = 14;
@@ -83,6 +84,9 @@ private:
     1, 1, -1, 1, 1,   -1, 1,    // 左腿 0..6
     -1, -1, -1, 1, 1, -1, 1     // 右腿 7..13 例子，按需改
   };
+
+  // Optional configuration to override the joint discovery order
+  std::vector<std::string> configuredJointNames_;
 
   // 外部IMU缓存
   sensor_msgs::Imu yesenceIMU_;

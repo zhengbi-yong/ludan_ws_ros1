@@ -10,6 +10,7 @@
 #include <mutex>
 #include <array>
 #include <vector>
+#include <string>
 
 #include <memory>
 static constexpr int NUM_JOINTS = 14;
@@ -69,6 +70,9 @@ private:
   int powerLimit_{0};
   int contactThreshold_{0};
   bool estimateContact_[4]{false, false, false, false};
+
+  // Optional configuration to override the joint discovery order
+  std::vector<std::string> configuredJointNames_;
 
   // 下发缓冲（电机方向映射）
   DmMotorData dmSendcmd_[NUM_JOINTS];

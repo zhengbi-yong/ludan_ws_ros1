@@ -4,4 +4,7 @@ legged_dm_hw:
   thread_priority: 95
   power_limit: 6
   contact_threshold: 200
+  joint_names: [arm_left_joint_1, arm_left_joint_2, arm_left_joint_3, arm_left_joint_4, arm_left_joint_5, arm_left_joint_6,
+                arm_left_joint_7, arm_right_joint_1, arm_right_joint_2, arm_right_joint_3, arm_right_joint_4,
+                arm_right_joint_5, arm_right_joint_6, arm_right_joint_7]
 
