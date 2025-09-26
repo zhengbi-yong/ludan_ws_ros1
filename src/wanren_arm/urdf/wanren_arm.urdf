@@ -1,13 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
-     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
-     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
-<robot
-  name="wanren_arm">
-  <!-- Add a dummy link to handle inertia -->
+<!-- Modularized version of the original Wanren humanoid description. -->
+<robot name="wanren_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="enable_waist" default="true" />
+  <xacro:arg name="enable_neck_left" default="true" />
+  <xacro:arg name="enable_neck_right" default="true" />
+  <xacro:arg name="enable_arm_left" default="true" />
+  <xacro:arg name="enable_arm_right" default="true" />
+  <xacro:arg name="enable_leg_left" default="true" />
+  <xacro:arg name="enable_leg_right" default="true" />
 
+  <!-- Base reference link -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <xacro:if value="${enable_waist}">
+    <link name="waist_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <mass value="0.05" />
+        <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="0.08" length="0.05" />
+        </geometry>
+        <material name="waist_material">
+          <color rgba="0.5 0.5 0.5 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="0.08" length="0.05" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="waist_yaw_joint" type="continuous">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="waist_link" />
+      <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="waist_to_torso_fixed" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="waist_link" />
+      <child link="torso_link" />
+    </joint>
+  </xacro:if>
+
+  <xacro:unless value="${enable_waist}">
+    <joint name="base_to_torso_fixed" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="torso_link" />
+    </joint>
+  </xacro:unless>
+
+  <!-- Add a dummy link to handle inertia -->
   <link
-    name="body">
+    name="torso_link">
     <inertial>
       <origin
         xyz="1.58624299813302E-05 2.01332320114156E-07 -0.0245724500252954"
@@ -46,8 +105,9 @@
       </geometry>
     </collision>
   </link>
+  <xacro:if value="${enable_leg_right}">
   <link
-    name="leg_r1_link">
+    name="leg_right_link_1">
     <inertial>
       <origin
         xyz="-0.00382422792815949 -0.0123142355221975 0.0766747228132015"
@@ -87,20 +147,20 @@
     </collision>
   </link>
   <joint
-    name="leg_r1_joint"
+    name="leg_right_joint_1"
     type="continuous">
     <origin
       xyz="0 0 0.011999999999999"
       rpy="0 0 0" />
     <parent
-      link="body" />
+      link="torso_link" />
     <child
-      link="leg_r1_link" />
+      link="leg_right_link_1" />
     <axis
       xyz="0 0 -1" />
   </joint>
   <link
-    name="leg_r2_link">
+    name="leg_right_link_2">
     <inertial>
       <origin
         xyz="0.0284932164900757 0.0852314382000906 0.0233442478183801"
@@ -140,20 +200,20 @@
     </collision>
   </link>
   <joint
-    name="leg_r2_joint"
+    name="leg_right_joint_2"
     type="continuous">
     <origin
       xyz="-0.0136812977041495 -0.0436944371355362 0.0808116620061236"
       rpy="0 0 0" />
     <parent
-      link="leg_r1_link" />
+      link="leg_right_link_1" />
     <child
-      link="leg_r2_link" />
+      link="leg_right_link_2" />
     <axis
       xyz="0.29752487908452 0.954714065218347 0" />
   </joint>
   <link
-    name="leg_r3_link">
+    name="leg_right_link_3">
     <inertial>
       <origin
         xyz="0.00440804925886197 -0.000927955750798931 0.0105438054247052"
@@ -193,20 +253,20 @@
     </collision>
   </link>
   <joint
-    name="leg_r3_joint"
+    name="leg_right_joint_3"
     type="continuous">
     <origin
       xyz="0.0412068272569313 0.104588881771451 0.106228185949221"
       rpy="0 0 0" />
     <parent
-      link="leg_r2_link" />
+      link="leg_right_link_2" />
     <child
-      link="leg_r3_link" />
+      link="leg_right_link_3" />
     <axis
       xyz="-0.0722349306802614 0.022511126419206 -0.997133573788866" />
   </joint>
   <link
-    name="leg_r4_link">
+    name="leg_right_link_4">
     <inertial>
       <origin
         xyz="0.0155060558890136 0.0411774297341984 0.0346709586399187"
@@ -246,20 +306,20 @@
     </collision>
   </link>
   <joint
-    name="leg_r4_joint"
+    name="leg_right_joint_4"
     type="continuous">
     <origin
       xyz="-0.00228042956033238 -0.0297792321778995 0.0833604475054363"
       rpy="0 0 0" />
     <parent
-      link="leg_r3_link" />
+      link="leg_right_link_3" />
     <child
-      link="leg_r4_link" />
+      link="leg_right_link_4" />
     <axis
       xyz="0.282983296167026 0.959124144572578 0.0011529910516605" />
   </joint>
   <link
-    name="leg_r5_link">
+    name="leg_right_link_5">
     <inertial>
       <origin
         xyz="-0.0048559147531092 -0.0119363039004067 -0.00678188706287566"
@@ -299,20 +359,20 @@
     </collision>
   </link>
   <joint
-    name="leg_r5_joint"
+    name="leg_right_joint_5"
     type="continuous">
     <origin
       xyz="0.0181511434262854 0.025007599076044 0.111134888878763"
       rpy="0 1.26722046551249 0" />
     <parent
-      link="leg_r4_link" />
+      link="leg_right_link_4" />
     <child
-      link="leg_r5_link" />
+      link="leg_right_link_5" />
     <axis
       xyz="0.923719785557326 0.0273056458564005 -0.382094437900229" />
   </joint>
   <link
-    name="leg_r6_link">
+    name="leg_right_link_6">
     <inertial>
       <origin
         xyz="0.0651691107467127 0.0806102275858783 -0.0545046281847596"
@@ -352,20 +412,20 @@
     </collision>
   </link>
   <joint
-    name="leg_r6_joint"
+    name="leg_right_joint_6"
     type="continuous">
     <origin
       xyz="-0.0550712045826083 -0.0332459772838745 -0.000878918231283499"
       rpy="1.5372364468678 -1.26722046551249 0" />
     <parent
-      link="leg_r5_link" />
+      link="leg_right_link_5" />
     <child
-      link="leg_r6_link" />
+      link="leg_right_link_6" />
     <axis
       xyz="0.565655964466871 0 -0.824641334073823" />
   </joint>
   <link
-    name="leg_r7_link">
+    name="leg_right_link_7">
     <inertial>
       <origin
         xyz="0.122014637753753 -0.108460665221082 -0.0505526819127103"
@@ -394,21 +454,22 @@
     </collision>
   </link>
   <joint
-    name="leg_r7_joint"
+    name="leg_right_joint_7"
     type="continuous">
     <origin
       xyz="0.0506954674848457 0.0975609362242854 -0.0679978120533321"
       rpy="-1.5372364468678 0 0" />
     <parent
-      link="leg_r6_link" />
+      link="leg_right_link_6" />
     <child
-      link="leg_r7_link" />
+      link="leg_right_link_7" />
     <axis
       xyz="0.804819794366103 -0.559061164385712 -0.199288015375224" />
   </joint>
 
 
   <!-- Added neck and arm kinematics -->
+  <xacro:if value="${enable_neck_left or enable_neck_right}">
   <!-- Neck base -->
   <link name="neck_mount_link">
     <inertial>
@@ -434,9 +495,10 @@
   </link>
   <joint name="neck_mount_fixed" type="fixed">
     <origin xyz="0 0 0.45" rpy="0 0 0"/>
-    <parent link="body"/>
+    <parent link="torso_link"/>
     <child link="neck_mount_link"/>
   </joint>
+  <xacro:if value="${enable_neck_left}">
   <link name="neck_left_link_1">
     <inertial>
       <origin xyz="0 0 0.040" rpy="0 0 0"/>
@@ -633,6 +695,7 @@
     <child link="neck_left_link_7"/>
     <axis xyz="1 0 0"/>
   </joint>
+  <xacro:if value="${enable_neck_right}">
   <link name="neck_right_link_1">
     <inertial>
       <origin xyz="0 0 0.040" rpy="0 0 0"/>
@@ -829,6 +892,7 @@
     <child link="neck_right_link_7"/>
     <axis xyz="1 0 0"/>
   </joint>
+  <xacro:if value="${enable_arm_left}">
   <link name="arm_left_link_1">
     <inertial>
       <origin xyz="0 0 0.090" rpy="0 0 0"/>
@@ -985,7 +1049,7 @@
   </link>
   <joint name="arm_left_joint_1" type="continuous">
     <origin xyz="0.050 0.250 0.250" rpy="0 0 0"/>
-    <parent link="body"/>
+    <parent link="torso_link"/>
     <child link="arm_left_link_1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -1025,6 +1089,7 @@
     <child link="arm_left_link_7"/>
     <axis xyz="0 1 0"/>
   </joint>
+  <xacro:if value="${enable_arm_right}">
   <link name="arm_right_link_1">
     <inertial>
       <origin xyz="0 0 0.090" rpy="0 0 0"/>
@@ -1181,7 +1246,7 @@
   </link>
   <joint name="arm_right_joint_1" type="continuous">
     <origin xyz="0.050 -0.250 0.250" rpy="0 0 0"/>
-    <parent link="body"/>
+    <parent link="torso_link"/>
     <child link="arm_right_link_1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -1222,84 +1287,86 @@
     <axis xyz="0 1 0"/>
   </joint>
 
-  <transmission name="trans_leg_r1">
+  <transmission name="trans_leg_right_1">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_r1">
+  <actuator name="motor_leg_right_1">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_r1_joint">
+  <joint name="leg_right_joint_1">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
 
-  <transmission name="trans_leg_r2">
+  <transmission name="trans_leg_right_2">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_r2">
+  <actuator name="motor_leg_right_2">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_r2_joint">
+  <joint name="leg_right_joint_2">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
 
-  <transmission name="trans_leg_r3">
+  <transmission name="trans_leg_right_3">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_r3">
+  <actuator name="motor_leg_right_3">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_r3_joint">
+  <joint name="leg_right_joint_3">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
 
-  <transmission name="trans_leg_r4">
+  <transmission name="trans_leg_right_4">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_r4">
+  <actuator name="motor_leg_right_4">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_r4_joint">
+  <joint name="leg_right_joint_4">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
 
-  <transmission name="trans_leg_r5">
+  <transmission name="trans_leg_right_5">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_r5">
+  <actuator name="motor_leg_right_5">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_r5_joint">
+  <joint name="leg_right_joint_5">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
 
-  <transmission name="trans_leg_r6">
+  <transmission name="trans_leg_right_6">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_r6">
+  <actuator name="motor_leg_right_6">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_r6_joint">
+  <joint name="leg_right_joint_6">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
 
-  <transmission name="trans_leg_r7">
+  <transmission name="trans_leg_right_7">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_r7">
+  <actuator name="motor_leg_right_7">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_r7_joint">
+  <joint name="leg_right_joint_7">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
+  </xacro:if>
+  <xacro:if value="${enable_leg_left}">
   <link
-    name="leg_l1_link">
+    name="leg_left_link_1">
     <inertial>
       <origin
         xyz="-0.00382422792815949 -0.0123142355221975 0.0766747228132015"
@@ -1339,20 +1406,20 @@
     </collision>
   </link>
   <joint
-    name="leg_l1_joint"
+    name="leg_left_joint_1"
     type="continuous">
     <origin
       xyz="1 1 -0.011999999999999"
       rpy="0 0 0" />
     <parent
-      link="body" />
+      link="torso_link" />
     <child
-      link="leg_l1_link" />
+      link="leg_left_link_1" />
     <axis
       xyz="0 0 -1" />
   </joint>
   <link
-    name="leg_l2_link">
+    name="leg_left_link_2">
     <inertial>
       <origin
         xyz="0.0284932164900757 0.0852314382000906 0.0233442478183801"
@@ -1392,20 +1459,20 @@
     </collision>
   </link>
   <joint
-    name="leg_l2_joint"
+    name="leg_left_joint_2"
     type="continuous">
     <origin
       xyz="-0.0136812977041495 -0.0436944371355362 0.0808116620061236"
       rpy="0 0 0" />
     <parent
-      link="leg_l1_link" />
+      link="leg_left_link_1" />
     <child
-      link="leg_l2_link" />
+      link="leg_left_link_2" />
     <axis
       xyz="0.29752487908452 0.954714065218347 0" />
   </joint>
   <link
-    name="leg_l3_link">
+    name="leg_left_link_3">
     <inertial>
       <origin
         xyz="0.00440804925886197 -0.000927955750798931 0.0105438054247052"
@@ -1445,20 +1512,20 @@
     </collision>
   </link>
   <joint
-    name="leg_l3_joint"
+    name="leg_left_joint_3"
     type="continuous">
     <origin
       xyz="0.0412068272569313 0.104588881771451 0.106228185949221"
       rpy="0 0 0" />
     <parent
-      link="leg_l2_link" />
+      link="leg_left_link_2" />
     <child
-      link="leg_l3_link" />
+      link="leg_left_link_3" />
     <axis
       xyz="-0.0722349306802614 0.022511126419206 -0.997133573788866" />
   </joint>
   <link
-    name="leg_l4_link">
+    name="leg_left_link_4">
     <inertial>
       <origin
         xyz="0.0155060558890136 0.0411774297341984 0.0346709586399187"
@@ -1498,20 +1565,20 @@
     </collision>
   </link>
   <joint
-    name="leg_l4_joint"
+    name="leg_left_joint_4"
     type="continuous">
     <origin
       xyz="-0.00228042956033238 -0.0297792321778995 0.0833604475054363"
       rpy="0 0 0" />
     <parent
-      link="leg_l3_link" />
+      link="leg_left_link_3" />
     <child
-      link="leg_l4_link" />
+      link="leg_left_link_4" />
     <axis
       xyz="0.282983296167026 0.959124144572578 0.0011529910516605" />
   </joint>
   <link
-    name="leg_l5_link">
+    name="leg_left_link_5">
     <inertial>
       <origin
         xyz="-0.0048559147531092 -0.0119363039004067 -0.00678188706287566"
@@ -1551,20 +1618,20 @@
     </collision>
   </link>
   <joint
-    name="leg_l5_joint"
+    name="leg_left_joint_5"
     type="continuous">
     <origin
       xyz="0.0181511434262854 0.025007599076044 0.111134888878763"
       rpy="0 1.26722046551249 0" />
     <parent
-      link="leg_l4_link" />
+      link="leg_left_link_4" />
     <child
-      link="leg_l5_link" />
+      link="leg_left_link_5" />
     <axis
       xyz="0.923719785557326 0.0273056458564005 -0.382094437900229" />
   </joint>
   <link
-    name="leg_l6_link">
+    name="leg_left_link_6">
     <inertial>
       <origin
         xyz="0.0651691107467127 0.0806102275858783 -0.0545046281847596"
@@ -1604,20 +1671,20 @@
     </collision>
   </link>
   <joint
-    name="leg_l6_joint"
+    name="leg_left_joint_6"
     type="continuous">
     <origin
       xyz="-0.0550712045826083 -0.0332459772838745 -0.000878918231283499"
       rpy="1.5372364468678 -1.26722046551249 0" />
     <parent
-      link="leg_l5_link" />
+      link="leg_left_link_5" />
     <child
-      link="leg_l6_link" />
+      link="leg_left_link_6" />
     <axis
       xyz="0.565655964466871 0 -0.824641334073823" />
   </joint>
   <link
-    name="leg_l7_link">
+    name="leg_left_link_7">
     <inertial>
       <origin
         xyz="0.122014637753753 -0.108460665221082 -0.0505526819127103"
@@ -1646,95 +1713,97 @@
     </collision>
   </link>
   <joint
-    name="leg_l7_joint"
+    name="leg_left_joint_7"
     type="continuous">
     <origin
       xyz="0.0506954674848457 0.0975609362242854 -0.0679978120533321"
       rpy="-1.5372364468678 0 0" />
     <parent
-      link="leg_l6_link" />
+      link="leg_left_link_6" />
     <child
-      link="leg_l7_link" />
+      link="leg_left_link_7" />
     <axis
       xyz="0.804819794366103 -0.559061164385712 -0.199288015375224" />
   </joint>
 
-  <transmission name="trans_leg_l1">
+  <transmission name="trans_leg_left_1">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_l1">
+  <actuator name="motor_leg_left_1">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_l1_joint">
+  <joint name="leg_left_joint_1">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
 
-  <transmission name="trans_leg_l2">
+  <transmission name="trans_leg_left_2">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_l2">
+  <actuator name="motor_leg_left_2">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_l2_joint">
+  <joint name="leg_left_joint_2">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
 
-  <transmission name="trans_leg_l3">
+  <transmission name="trans_leg_left_3">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_l3">
+  <actuator name="motor_leg_left_3">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_l3_joint">
+  <joint name="leg_left_joint_3">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
 
-  <transmission name="trans_leg_l4">
+  <transmission name="trans_leg_left_4">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_l4">
+  <actuator name="motor_leg_left_4">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_l4_joint">
+  <joint name="leg_left_joint_4">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
 
-  <transmission name="trans_leg_l5">
+  <transmission name="trans_leg_left_5">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_l5">
+  <actuator name="motor_leg_left_5">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_l5_joint">
+  <joint name="leg_left_joint_5">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
 
-  <transmission name="trans_leg_l6">
+  <transmission name="trans_leg_left_6">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_l6">
+  <actuator name="motor_leg_left_6">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_l6_joint">
+  <joint name="leg_left_joint_6">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
 
-  <transmission name="trans_leg_l7">
+  <transmission name="trans_leg_left_7">
   <type>transmission_interface/SimpleTransmission</type>
-  <actuator name="motor_leg_l7">
+  <actuator name="motor_leg_left_7">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
-  <joint name="leg_l7_joint">
+  <joint name="leg_left_joint_7">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
+
+  </xacro:if>
 
   <transmission name="trans_neck_left_joint_1">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1813,6 +1882,8 @@
   </joint>
   </transmission>
 
+  </xacro:if>
+
   <transmission name="trans_neck_right_joint_1">
   <type>transmission_interface/SimpleTransmission</type>
   <actuator name="motor_neck_right_joint_1">
@@ -1889,6 +1960,10 @@
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
+
+  </xacro:if>
+
+  </xacro:if>
 
   <transmission name="trans_arm_left_joint_1">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1967,6 +2042,8 @@
   </joint>
   </transmission>
 
+  </xacro:if>
+
   <transmission name="trans_arm_right_joint_1">
   <type>transmission_interface/SimpleTransmission</type>
   <actuator name="motor_arm_right_joint_1">
@@ -2043,6 +2120,21 @@
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   </transmission>
+
+  </xacro:if>
+
+  <xacro:if value="${enable_waist}">
+  <transmission name="trans_waist_yaw_joint">
+  <type>transmission_interface/SimpleTransmission</type>
+  <actuator name="motor_waist_yaw_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+  <joint name="waist_yaw_joint">
+    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+  </joint>
+  </transmission>
+  </xacro:if>
 
 
 </robot>

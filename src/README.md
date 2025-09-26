@@ -12,6 +12,13 @@
 
 `wanren_arm/urdf/wanren_arm.urdf` 现在同时包含身体、左右两条腿、左右两条手臂以及颈部关节链，无需再维护多份 URDF。与之配套的控制命名空间按照 `wanren/legs`、`wanren/arms`、`wanren/neck` 进行划分，可通过 `simple_hybrid_joint_controller/launch/bringup_real.launch` 一次性加载所有硬件接口与控制器。各硬件包会从参数 `joint_names` 中读取明确的关节顺序，避免再根据字符串前缀做模糊匹配。
 
+## 模块化开关与配置
+
+- **URDF/Xacro 开关**：`wanren_arm.urdf` 为每个部位提供布尔开关（`enable_waist`、`enable_leg_left`、`enable_leg_right`、`enable_arm_left`、`enable_arm_right`、`enable_neck_left`、`enable_neck_right`），通过 `xacro:if` 组合最终模型，便于按需裁剪硬件。【F:wanren_arm/urdf/wanren_arm.urdf†L4-L13】
+- **关节模块参数**：腿部与颈部硬件配置文件使用 `joint_modules` 列表描述每条链路的关节名、方向与启用状态，驱动程序会自动扁平化为 `joint_names`/`joint_directions`，扩展其它部位时只需追加一个模块即可。【F:legged_examples/legged_dm_hw/config/dm.yaml†L1-L21】【F:legged_examples/legged_dm_hw/src/DmHW.cpp†L121-L208】
+
+得益于上述设计，腰、左右臂、左右腿、左右颈部都可以独立启停，后续要拓展新的链路（如手指、视觉云台）仅需复用相同模式配置。
+
 ## 更清晰的工作空间结构
 
 为减少无用依赖，左臂相关的功能包（`dmbot_serial_left_arm`、`simple_hybrid_joint_controller_left_arm`、`legged_examples/left_arm_dm_hw`）已被彻底移除，只保留腿部、颈部与右臂桥接的实现。统一的 URDF 与命名空间仍然按照 `wanren/legs`、`wanren/neck`（以及可选的 `wanren/right_arm`）进行划分，避免了重复的模型维护工作。
@@ -35,6 +42,19 @@
    roslaunch right_arm_hw bringup.launch
    ```
    然后向 `/all_joints_hjc/command_moveJ` 或自定义话题发送命令。
+
+### 调试与排错
+
+- 启动硬件节点时报 `could not retrieve one of the required parameters: loop_hz or cycle_time_error_threshold or thread_priority`
+  的错误，多半是因为节点启动时清空了私有命名空间内的参数。Launch 文件已移除 `clear_params="true"`，只要在启动节点前通过
+  `<rosparam ... ns="legged_dm_hw"/>` / `<rosparam ... ns="neck_dm_hw"/>` 加载配置，就能正确读取 `loop_frequency` 等关键参数。
+  【F:legged_examples/legged_dm_hw/launch/legged_dm_hw.launch†L13-L17】【F:legged_examples/neck_dm_hw/launch/neck_dm_hw.launch†L7-L11】
+- 建议的本地测试流程：
+  1. `cd ~/ludan_ws_ros1 && catkin build`（或 `catkin_make`），然后 `source devel/setup.bash`。
+  2. 仅验证腿部链路：`roslaunch legged_dm_hw legged_dm_hw.launch robot_type:=dm`。
+  3. 仅验证颈部链路：`roslaunch neck_dm_hw neck_dm_hw.launch robot_type:=dm`。
+  4. 若需要同时检查控制器工作流，可继续使用 `simple_hybrid_joint_controller/launch/bringup_real.launch`。
+  这样可以确认参数加载、控制器装载及话题命名是否与硬件代码保持一致。
 
 如需调试腿部或颈部的混合控制器，可直接向 `wanren/legs`、`wanren/neck` 命名空间下的控制话题发布命令；硬件接口会根据 `wanren_arm/config/wanren_controllers.yaml` 中定义的关节顺序进行映射。【F:wanren_arm/config/wanren_controllers.yaml†L1-L41】
 

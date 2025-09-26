@@ -7,9 +7,9 @@
             robot_type:=$(arg robot_type) "/>
         <param name="manual_topic_override" value="true"/>
         <param name="manual_cmd_timeout" value="0.2"/>
-        <rosparam file="$(find neck_dm_hw)/config/$(arg robot_type).yaml" command="load"/>
+        <rosparam file="$(find neck_dm_hw)/config/$(arg robot_type).yaml" command="load" ns="neck_dm_hw"/>
 
-        <node name="neck_dm_hw" pkg="neck_dm_hw" type="neck_dm_hw" respawn="false" clear_params="true" output="screen">
+        <node name="neck_dm_hw" pkg="neck_dm_hw" type="neck_dm_hw" respawn="false" output="screen">
         </node>
 
       <!--<node pkg="yesense_imu" type="yesense_imu_node" name="yesense_imu_node" output="screen"   respawn="true" respawn_delay="0.002" >

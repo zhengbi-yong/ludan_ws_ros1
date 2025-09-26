@@ -25,7 +25,7 @@ rosparam set /all_joints_hjc/default_kp 0.0
 rosparam set /all_joints_hjc/default_kd 0.0
 rosparam set /all_joints_hjc/default_vel 0.0
 rosparam set /all_joints_hjc/default_ff  0.0
-rosparam set /all_joints_hjc/joints "['leg_l1_joint','leg_l2_joint','leg_l3_joint','leg_l4_joint','leg_l5_joint','leg_r1_joint','leg_r2_joint','leg_r3_joint','leg_r4_joint','leg_r5_joint']"
+rosparam set /all_joints_hjc/joints "['leg_left_joint_1','leg_left_joint_2','leg_left_joint_3','leg_left_joint_4','leg_left_joint_5','leg_right_joint_1','leg_right_joint_2','leg_right_joint_3','leg_right_joint_4','leg_right_joint_5']"
 
 rosrun controller_manager spawner joint_state_controller all_joints_hjc
 
@@ -56,7 +56,7 @@ rostopic echo -n 1 /joint_states
 
 1) 写入控制器参数（让 controller_manager 知道它是什么）
 rosparam set /all_joints_hjc/type "simple_hjc/AllJointsHybridController"
-rosparam set /all_joints_hjc/joints "['leg_l1_joint','leg_l2_joint','leg_l3_joint','leg_l4_joint','leg_l5_joint','leg_r1_joint','leg_r2_joint','leg_r3_joint','leg_r4_joint','leg_r5_joint']"
+rosparam set /all_joints_hjc/joints "['leg_left_joint_1','leg_left_joint_2','leg_left_joint_3','leg_left_joint_4','leg_left_joint_5','leg_right_joint_1','leg_right_joint_2','leg_right_joint_3','leg_right_joint_4','leg_right_joint_5']"
 rosparam set /all_joints_hjc/default_kp 0.0
 rosparam set /all_joints_hjc/default_kd 0.0
 rosparam set /all_joints_hjc/default_vel 0.0
